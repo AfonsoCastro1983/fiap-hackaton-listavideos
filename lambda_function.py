@@ -1,5 +1,6 @@
 import boto3
 import jwt
+import json
 
 dynamodb_client = boto3.resource('dynamodb')
 
@@ -20,9 +21,8 @@ def lambda_handler(event, context):
             "statusCode": 401,
             "body": f"Token inválido: {str(e)}"
         }
-    
+
     table = dynamodb_client.Table("VideosTable")
-    
     # Query para buscar vídeos do usuário
     response = table.query(
         KeyConditionExpression="userId = :userId",
@@ -33,5 +33,5 @@ def lambda_handler(event, context):
 
     return {
         "statusCode": 200,
-        "body": response['Items']
+        "body": json.dumps(response['Items'])
     }
