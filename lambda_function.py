@@ -1,4 +1,5 @@
 import boto3
+import jwt
 
 dynamodb_client = boto3.resource('dynamodb')
 
